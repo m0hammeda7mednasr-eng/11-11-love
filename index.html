@@ -202,6 +202,8 @@ body{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-ri
 .tease-card p{color:var(--muted);margin:0 0 18px}
 @keyframes teasePop{from{opacity:0;transform:scale(.82)}to{opacity:1;transform:scale(1)}}
 
+
+#ytMusicWrap{position:fixed;width:1px;height:1px;overflow:hidden;opacity:.01;pointer-events:none;left:-10px;bottom:-10px}
 </style>
 </head>
 <body>
@@ -395,9 +397,19 @@ body{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-ri
     <footer class="footer">Made with all my love ♡ · 11:11</footer>
   </main>
 
-  <audio id="bgMusic" loop preload="none">
-    <source src="assets/our-song.mp3" type="audio/mpeg" />
-  </audio>
+  <div id="ytMusicWrap" aria-hidden="true">
+    <iframe
+      id="ytMusic"
+      width="1"
+      height="1"
+      src="https://www.youtube.com/embed/Kvz9E2v-ujY?autoplay=1&mute=1&loop=1&playlist=Kvz9E2v-ujY&controls=0&modestbranding=1&playsinline=1&enablejsapi=1"
+      title="Background music"
+      frameborder="0"
+      allow="autoplay; encrypted-media"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen>
+    </iframe>
+  </div>
 
   <script>
 const countdownScreen = document.getElementById('countdownScreen');
@@ -410,7 +422,30 @@ const minutesEl = document.getElementById('minutes');
 const secondsEl = document.getElementById('seconds');
 const countdownNote = document.getElementById('countdownNote');
 const musicBtn = document.getElementById('musicBtn');
-const music = document.getElementById('bgMusic');
+const ytMusic = document.getElementById('ytMusic');
+let ytUnmuted = false;
+
+function ytCommand(func, args=[]){
+  try{
+    ytMusic?.contentWindow?.postMessage(JSON.stringify({
+      event:'command',
+      func,
+      args
+    }), '*');
+  }catch(e){}
+}
+
+function startYouTubeMusic(){
+  ytCommand('playVideo');
+}
+
+function unmuteYouTubeMusic(){
+  startYouTubeMusic();
+  ytCommand('unMute');
+  ytCommand('setVolume',[70]);
+  ytUnmuted = true;
+  if(musicBtn) musicBtn.textContent = '♫ الأغنية شغالة';
+}
 
 function getNext1111() {
   const now = new Date();
@@ -496,16 +531,12 @@ function spawnHeart() {
 function burstHearts(count){ for(let i=0;i<count;i++) setTimeout(spawnHeart, i * 120); }
 setInterval(spawnHeart, 1300);
 
-musicBtn.addEventListener('click', async () => {
-  if (music.paused) {
-    try {
-      await music.play();
-      musicBtn.textContent = '♫ الموسيقى شغالة';
-    } catch (e) {
-      musicBtn.textContent = '♫ حطوا الأغنية في assets/our-song.mp3';
-    }
-  } else {
-    music.pause();
+musicBtn.addEventListener('click', () => {
+  if(!ytUnmuted){
+    unmuteYouTubeMusic();
+  }else{
+    ytCommand('mute');
+    ytUnmuted = false;
     musicBtn.textContent = '♫ شغّلي الأغنية';
   }
 });
@@ -620,6 +651,16 @@ function launchConfetti(count){
 }
 
 if (loveQuizQuestion) renderLoveQuiz();
+
+window.addEventListener('load', () => {
+  startYouTubeMusic();
+});
+
+const unlockMusicOnce = () => {
+  if(!ytUnmuted) unmuteYouTubeMusic();
+};
+document.addEventListener('pointerdown', unlockMusicOnce, {once:true, passive:true});
+document.addEventListener('touchstart', unlockMusicOnce, {once:true, passive:true});
 
 </script>
 </body>
