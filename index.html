@@ -126,6 +126,75 @@ button{font:inherit;cursor:pointer;border:none}
 @keyframes confettiFall{to{transform:translate3d(var(--drift),110vh,0) rotate(900deg);opacity:.9}}
 @media(max-width:640px){.quiz-shell{padding:20px 14px}.certificate{padding:24px 15px}.certificate h3,.prize-reveal h3{font-size:25px}.dance-icons{font-size:43px}}
 
+/* Mobile polish */
+body{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
+.music-btn{max-width:calc(100vw - 28px)}
+@media(max-width:640px){
+  body{font-size:15px}
+  .section{width:min(100% - 20px,1100px);padding:42px 0}
+  .countdown-screen,.welcome-screen{padding:12px}
+  .countdown-box,.welcome-card{border-radius:24px;padding:26px 16px}
+  .countdown-box h1,.welcome-card h2{font-size:28px}
+  .clock{gap:7px;margin:22px 0}
+  .unit{padding:15px 7px;border-radius:17px}
+  .unit span{font-size:29px}
+  .unit small{font-size:11px}
+  .btn{width:100%;padding:14px 16px}
+  .hero{padding-top:76px;padding-bottom:20px}
+  .script-title.big{font-size:64px}
+  .hero h1{font-size:30px;line-height:1.35}
+  .hero-text{font-size:15px;line-height:2}
+  .hero-photo{width:min(92vw,390px)}
+  .hero-photo img{aspect-ratio:4/5;border-radius:18px}
+  .card-photo{padding:9px;border-radius:24px}
+  .letter-card,.final-box{padding:20px 16px;border-radius:24px}
+  .letter-card p,.final-box p{font-size:15px;line-height:2.1}
+  .signature{font-size:34px}
+  .polaroid-strip{
+    display:flex;
+    overflow-x:auto;
+    gap:14px;
+    padding:12px 8px 22px;
+    margin-inline:-4px;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch
+  }
+  .polaroid-strip::-webkit-scrollbar{display:none}
+  .hanger-card{
+    flex:0 0 78%;
+    max-width:300px;
+    scroll-snap-align:center;
+    transform:none!important
+  }
+  .gallery-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .gallery-item{padding:6px;border-radius:18px}
+  .gallery-item img,.gallery-item.tall img,.gallery-item.wide img{aspect-ratio:4/5;border-radius:14px}
+  .gallery-item.tall{grid-row:auto}
+  .gallery-item.wide{grid-column:auto}
+  .reason-list{grid-template-columns:1fr 1fr;gap:10px}
+  .reason-card{min-height:110px;padding:16px;font-size:15px;border-radius:20px}
+  .quiz-shell{padding:18px 12px;border-radius:24px}
+  .quiz-question{font-size:23px;line-height:1.55}
+  .quiz-option{padding:13px 11px;border-radius:15px;font-size:14px}
+  .certificate{padding:22px 13px;border-radius:18px}
+  .certificate h3,.prize-reveal h3{font-size:24px}
+  .certificate .manager{font-size:16px}
+  .dance-icons{font-size:39px;letter-spacing:2px}
+  .prize-reveal{padding:22px 12px}
+  .music-btn{
+    left:12px;right:12px;bottom:12px;top:auto;
+    width:auto;transform:none;
+    padding-bottom:calc(11px + env(safe-area-inset-bottom))
+  }
+  .footer{padding-bottom:82px}
+}
+@media(max-width:380px){
+  .hero h1{font-size:27px}
+  .section-title{font-size:25px}
+  .hanger-card{flex-basis:84%}
+  .reason-list{grid-template-columns:1fr}
+}
+
 </style>
 </head>
 <body>
