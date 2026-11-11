@@ -195,15 +195,32 @@ body{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-ri
   .reason-list{grid-template-columns:1fr}
 }
 
+.tease-popup{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:18px;background:rgba(0,0,0,.72);backdrop-filter:blur(10px)}
+.tease-card{width:min(420px,100%);text-align:center;background:linear-gradient(180deg,#1b101b,#100811);border:1px solid rgba(255,255,255,.11);border-radius:26px;padding:28px 20px;box-shadow:0 25px 70px rgba(0,0,0,.5);animation:teasePop .35s ease}
+.tease-card .emoji{font-size:54px;margin-bottom:8px}
+.tease-card h3{font-size:27px;margin:5px 0 8px}
+.tease-card p{color:var(--muted);margin:0 0 18px}
+@keyframes teasePop{from{opacity:0;transform:scale(.82)}to{opacity:1;transform:scale(1)}}
+
 </style>
 </head>
 <body>
   <div class="hearts" id="hearts"></div>
 
-  <section class="countdown-screen" id="countdownScreen">
+  
+  <div class="tease-popup hidden" id="teasePopup">
+    <div class="tease-card">
+      <div class="emoji">😂❤️</div>
+      <h3>استني يا بنت الكلب 😂</h3>
+      <p>مش قولتلك استني لـ 11:11 يا مهموهتي؟ 😏💕</p>
+      <button class="btn" id="closeTeaseBtn">حاضر يا رخم 😂</button>
+    </div>
+  </div>
+
+<section class="countdown-screen" id="countdownScreen">
     <div class="countdown-box">
       <div class="tiny-label">11 / 11</div>
-      <h1>استنّي لـ 11:11 يا قمراية ✨</h1>
+      <h1>استنّي لـ 11:11 يا مهموهتي ✨</h1>
       <p>في مفاجأة مستخبية ليكي… واللحظة الحلوة ليها معاد.</p>
       <div class="clock" id="clock">
         <div class="unit"><span id="hours">00</span><small>ساعة</small></div>
@@ -439,7 +456,15 @@ function updateCountdown() {
 
 const interval = setInterval(updateCountdown, 1000);
 updateCountdown();
-continueNowBtn.addEventListener('click', showWelcome);
+const teasePopup = document.getElementById('teasePopup');
+const closeTeaseBtn = document.getElementById('closeTeaseBtn');
+continueNowBtn.addEventListener('click', () => {
+  teasePopup.classList.remove('hidden');
+  burstHearts(8);
+});
+closeTeaseBtn.addEventListener('click', () => {
+  teasePopup.classList.add('hidden');
+});
 openSiteBtn.addEventListener('click', () => {
   welcomeScreen.classList.add('hidden');
   site.classList.remove('hidden');
