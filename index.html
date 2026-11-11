@@ -229,7 +229,7 @@ body{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-ri
         <div class="unit"><span id="minutes">00</span><small>دقيقة</small></div>
         <div class="unit"><span id="seconds">00</span><small>ثانية</small></div>
       </div>
-      <p class="countdown-note" id="countdownNote">أول ما الوقت ييجي… المفاجأة هتفتح ❤️</p>
+      <p class="countdown-note" id="countdownNote">أول ما الساعة تبقى 11:11 بالليل… المفاجأة هتفتح ❤️</p>
       <button class="btn ghost" id="continueNowBtn">افتحي دلوقتي لو مستعجلة 💕</button>
     </div>
   </section>
@@ -447,17 +447,13 @@ function unmuteYouTubeMusic(){
   if(musicBtn) musicBtn.textContent = '♫ الأغنية شغالة';
 }
 
-function getNext1111() {
+function getEventTarget() {
   const now = new Date();
-  const candidates = [];
-  const d1 = new Date(now); d1.setHours(11,11,0,0); candidates.push(d1);
-  const d2 = new Date(now); d2.setHours(23,11,0,0); candidates.push(d2);
-  let target = candidates.find(d => d > now);
-  if (!target) { target = new Date(now); target.setDate(target.getDate()+1); target.setHours(11,11,0,0); }
+  const target = new Date(now.getFullYear(), 10, 11, 23, 11, 0, 0); // Nov 11, 11:11 PM
   return target;
 }
 
-let target = getNext1111();
+let target = getEventTarget();
 let countdownDone = false;
 
 function pad(n){ return String(n).padStart(2,'0'); }
